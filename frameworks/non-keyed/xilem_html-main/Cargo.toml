@@ -1,0 +1,18 @@
+[package]
+name = "js-framework-benchmark-non-keyed-xilem_html-main"
+version = "0.1.0"
+publish = false
+edition = "2021"
+
+[dependencies]
+console_error_panic_hook = "0.1"
+wasm-bindgen = "0.2.87"
+web-sys = "0.3.64"
+js-sys = "*"
+xilem_html = { git = "https://github.com/Philipp-M/xilem.git", branch = "xilem_html-fix-html-table-type" }
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
