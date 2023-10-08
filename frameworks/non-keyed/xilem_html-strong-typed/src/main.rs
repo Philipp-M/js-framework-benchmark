@@ -129,11 +129,12 @@ fn control_buttons() -> impl HtmlDivElement<AppState> {
             .attr("class", "btn btn-primary btn-block")
             .attr("id", id)
             .on_click(move |state, _| cb(state)))
+        .attr("class", "col-sm-6 smallpad")
     };
 
     div(div((
-        div(h1("xilem_html 0.0.0 (non-keyed)")).attr("class", "col-md-6"),
-        div((
+        div(h1("xilem_html strong-typed (non-keyed)")).attr("class", "col-md-6"),
+        div(div((
             control_button("Create 1,000 rows", "run", AppState::run),
             control_button("Create 10,000 rows", "runlots", AppState::run_lots),
             control_button("Append 1,000 rows", "add", AppState::add),
@@ -141,6 +142,7 @@ fn control_buttons() -> impl HtmlDivElement<AppState> {
             control_button("Clear", "clear", AppState::clear),
             control_button("Swap Rows", "swaprows", AppState::swap_rows),
         ))
+        .attr("class", "row"))
         .attr("class", "col-md-6"),
     ))
     .attr("class", "row"))
@@ -149,11 +151,9 @@ fn control_buttons() -> impl HtmlDivElement<AppState> {
 
 fn row(r: &Row, selected: Option<usize>) -> impl HtmlTableRowElement<AppState> {
     let id = r.id;
-    let label = r.label.clone();
-
     tr((
         td(id.to_string()).attr("class", "col-md-1"),
-        td(a(label).on_click(move |state: &mut AppState, _| state.select(id)))
+        td(a(r.label.clone()).on_click(move |state: &mut AppState, _| state.select(id)))
             .attr("class", "col-md-4"),
         td(a(span(())
             .attr("class", "glyphicon glyphicon-remove")

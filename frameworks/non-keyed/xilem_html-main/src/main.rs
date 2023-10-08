@@ -129,11 +129,12 @@ fn control_buttons() -> impl View<AppState> + ViewMarker {
             .attr("class", "btn btn-primary btn-block")
             .attr("id", id)
             .on_click(move |state, _| cb(state)))
+        .attr("class", "col-sm-6 smallpad")
     };
 
     div(div((
-        div(h1("xilem_html 0.0.0 (non-keyed)")).attr("class", "col-md-6"),
-        div((
+        div(h1("xilem_html (non-keyed)")).attr("class", "col-md-6"),
+        div(div((
             control_button("Create 1,000 rows", "run", AppState::run),
             control_button("Create 10,000 rows", "runlots", AppState::run_lots),
             control_button("Append 1,000 rows", "add", AppState::add),
@@ -141,6 +142,7 @@ fn control_buttons() -> impl View<AppState> + ViewMarker {
             control_button("Clear", "clear", AppState::clear),
             control_button("Swap Rows", "swaprows", AppState::swap_rows),
         ))
+        .attr("class", "row"))
         .attr("class", "col-md-6"),
     ))
     .attr("class", "row"))

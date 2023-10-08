@@ -10,6 +10,7 @@ wasm-bindgen = "0.2.87"
 web-sys = "0.3.64"
 js-sys = "*"
 xilem_html = { git = "https://github.com/Philipp-M/xilem.git", branch = "xilem_html-strong-typing-attrs-elements-wrapper-types-with-concrete-event-types" }
+# xilem_html = { path = "/home/philm/dev/personal/rust/xilem/xilem_html-strong-typing-attrs-elements-wrapper-types-with-concrete-event-types/crates/xilem_html" }
 
 [profile.release]
 opt-level = 3

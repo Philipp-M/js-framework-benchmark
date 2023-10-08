@@ -210,7 +210,7 @@ function addBorrowedObject(obj) {
 }
 function __wbg_adapter_16(arg0, arg1, arg2) {
     try {
-        wasm.wasm_bindgen__convert__closures__invoke1_mut_ref__h0f8616406b5b330e(arg0, arg1, addBorrowedObject(arg2));
+        wasm.wasm_bindgen__convert__closures__invoke1_mut_ref__hdb7835879c77289f(arg0, arg1, addBorrowedObject(arg2));
     } finally {
         heap[stack_pointer++] = undefined;
     }
@@ -312,10 +312,18 @@ function __wbg_get_imports() {
         const ret = getObject(arg0).createElementNS(arg1 === 0 ? undefined : getStringFromWasm0(arg1, arg2), getStringFromWasm0(arg3, arg4));
         return addHeapObject(ret);
     }, arguments) };
-    imports.wbg.__wbg_instanceof_HtmlSpanElement_a411168520834551 = function(arg0) {
+    imports.wbg.__wbg_newwithdata_2520156f08af7d24 = function() { return handleError(function (arg0, arg1) {
+        const ret = new Text(getStringFromWasm0(arg0, arg1));
+        return addHeapObject(ret);
+    }, arguments) };
+    imports.wbg.__wbg_appendChild_51339d4cde00ee22 = function() { return handleError(function (arg0, arg1) {
+        const ret = getObject(arg0).appendChild(getObject(arg1));
+        return addHeapObject(ret);
+    }, arguments) };
+    imports.wbg.__wbg_instanceof_HtmlTableCellElement_388147567922df1a = function(arg0) {
         let result;
         try {
-            result = getObject(arg0) instanceof HTMLSpanElement;
+            result = getObject(arg0) instanceof HTMLTableCellElement;
         } catch {
             result = false;
         }
@@ -335,24 +343,6 @@ function __wbg_get_imports() {
     imports.wbg.__wbg_setAttribute_e7e80b478b7b8b2f = function() { return handleError(function (arg0, arg1, arg2, arg3, arg4) {
         getObject(arg0).setAttribute(getStringFromWasm0(arg1, arg2), getStringFromWasm0(arg3, arg4));
     }, arguments) };
-    imports.wbg.__wbg_newwithdata_2520156f08af7d24 = function() { return handleError(function (arg0, arg1) {
-        const ret = new Text(getStringFromWasm0(arg0, arg1));
-        return addHeapObject(ret);
-    }, arguments) };
-    imports.wbg.__wbg_appendChild_51339d4cde00ee22 = function() { return handleError(function (arg0, arg1) {
-        const ret = getObject(arg0).appendChild(getObject(arg1));
-        return addHeapObject(ret);
-    }, arguments) };
-    imports.wbg.__wbg_instanceof_HtmlTableCellElement_388147567922df1a = function(arg0) {
-        let result;
-        try {
-            result = getObject(arg0) instanceof HTMLTableCellElement;
-        } catch {
-            result = false;
-        }
-        const ret = result;
-        return ret;
-    };
     imports.wbg.__wbg_instanceof_HtmlAnchorElement_a293f072b6174b83 = function(arg0) {
         let result;
         try {
@@ -367,6 +357,16 @@ function __wbg_get_imports() {
         let result;
         try {
             result = getObject(arg0) instanceof HTMLTableRowElement;
+        } catch {
+            result = false;
+        }
+        const ret = result;
+        return ret;
+    };
+    imports.wbg.__wbg_instanceof_HtmlSpanElement_a411168520834551 = function(arg0) {
+        let result;
+        try {
+            result = getObject(arg0) instanceof HTMLSpanElement;
         } catch {
             result = false;
         }
