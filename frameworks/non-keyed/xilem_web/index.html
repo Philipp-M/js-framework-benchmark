@@ -1,14 +1,28 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
   <meta charset="UTF-8">
   <title>xilem_web</title>
-  <link href="/css/currentStyle.css" rel="stylesheet">
-  <script type="module">import init from '/frameworks/non-keyed/xilem_web/bundled-dist/js-framework-benchmark-non-keyed-xilem_web.js';init('/frameworks/non-keyed/xilem_web/bundled-dist/js-framework-benchmark-non-keyed-xilem_web_bg.wasm');</script>
+  <link href="/css/currentStyle.css" rel="stylesheet" />
+  
+<script type="module">
+import init, * as bindings from '/frameworks/non-keyed/xilem_web/bundled-dist/js-framework-benchmark-non-keyed-xilem_web.js';
+const wasm = await init('/frameworks/non-keyed/xilem_web/bundled-dist/js-framework-benchmark-non-keyed-xilem_web_bg.wasm');
 
-<link rel="preload" href="/frameworks/non-keyed/xilem_web/bundled-dist/js-framework-benchmark-non-keyed-xilem_web_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
-<link rel="modulepreload" href="/frameworks/non-keyed/xilem_web/bundled-dist/js-framework-benchmark-non-keyed-xilem_web.js"></head>
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+
+<link rel="modulepreload" href="/frameworks/non-keyed/xilem_web/bundled-dist/js-framework-benchmark-non-keyed-xilem_web.js" crossorigin=anonymous integrity="sha384-n0Wqf/LsEO+JaJyWdTBlCKomYtiEsbFECt7aAqwwrkMIMdIBW+WnTFlQbbAn7fYH">
+<link rel="preload" href="/frameworks/non-keyed/xilem_web/bundled-dist/js-framework-benchmark-non-keyed-xilem_web_bg.wasm" crossorigin=anonymous integrity="sha384-/Isuh/HgOHnzCE6pkad+Ip88W5ZIBTMxnjGzZPzIZqi0xO6sS87j1R2tF1dVMpR7" as="fetch" type="application/wasm"></head>
 
 <body>
-  <div id="main"></div>
+  <div id='main'></div>
+</body>
 
-
-</body></html>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>xilem_web-rewrite</title>
+  <link href="/css/currentStyle.css" rel="stylesheet" />
+  
+<script type="module">
+import init, * as bindings from '/frameworks/non-keyed/xilem_web-rewrite/bundled-dist/js-framework-benchmark-non-keyed-xilem_web-rewrite.js';
+const wasm = await init('/frameworks/non-keyed/xilem_web-rewrite/bundled-dist/js-framework-benchmark-non-keyed-xilem_web-rewrite_bg.wasm');
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+
+<link rel="modulepreload" href="/frameworks/non-keyed/xilem_web-rewrite/bundled-dist/js-framework-benchmark-non-keyed-xilem_web-rewrite.js" crossorigin=anonymous integrity="sha384-wGZUR0LH2MGPW7sjMWKJrLd0RH11LoEdRJJMpPyh/qm/OL+LTJT8oqKKnO74lWQH">
+<link rel="preload" href="/frameworks/non-keyed/xilem_web-rewrite/bundled-dist/js-framework-benchmark-non-keyed-xilem_web-rewrite_bg.wasm" crossorigin=anonymous integrity="sha384-M07XCHfFLbXCrPWWuNf9fvCMARqWJSmA/IBg7ui0b35vZqKwgx7DtDMlBSpygvjh" as="fetch" type="application/wasm"></head>
+
+<body>
+  <div id='main'></div>
+</body>
+
+</html>

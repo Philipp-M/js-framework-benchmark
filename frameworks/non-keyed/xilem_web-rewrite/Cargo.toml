@@ -1,5 +1,5 @@
 [package]
-name = "js-framework-benchmark-non-keyed-xilem_web"
+name = "js-framework-benchmark-non-keyed-xilem_web-rewrite"
 version = "0.1.0"
 publish = false
 edition = "2021"
@@ -10,6 +10,17 @@ wasm-bindgen = "0.2.87"
 web-sys = "0.3.64"
 js-sys = "*"
 xilem_web = { git = "https://github.com/linebender/xilem.git" }
+
+# [unstable]
+# build-std = ["std", "panic_abort", "core", "alloc"]
+# build-std-features = ["panic_immediate_abort"]
+
+# [build]
+# rustflags = [
+#     "-Clto",
+#     "-Zvirtual-function-elimination",
+#     "-Zlocation-detail=none"
+# ]
 
 # Same as in the Stable section
 [profile.release]
