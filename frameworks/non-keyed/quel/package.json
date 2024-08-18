@@ -4,10 +4,9 @@
   "description": "benchmark for quel",
   "main": "index.js",
   "js-framework-benchmark": {
-    "frameworkVersion": "0.9.51",
+    "frameworkVersion": "0.16.1",
     "frameworkHomeURL": "https://github.com/mogera551/quel",
-    "issues": [
-    ]
+    "issues": [1139]
   },
   "scripts": {
     "build-dev": "echo 0",
