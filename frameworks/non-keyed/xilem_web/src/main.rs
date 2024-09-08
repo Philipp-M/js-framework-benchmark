@@ -1,6 +1,9 @@
 use xilem_web::{
-    elements::html::*, get_element_by_id, interfaces::*, memoize, static_view, App, View,
-    ViewMarker,
+    core::{frozen, memoize},
+    elements::html::*,
+    get_element_by_id,
+    interfaces::{Element as _, HtmlDivElement, HtmlTableRowElement},
+    templated, App, DomView,
 };
 
 #[rustfmt::skip]
@@ -71,6 +74,7 @@ impl AppState {
         self.rows.clear();
         self.add();
     }
+
     fn run_lots(&mut self) {
         self.rows.clear();
         let data = self.create(10000);
@@ -104,17 +108,21 @@ impl AppState {
     }
 }
 
-fn control_buttons() -> impl View<AppState> + ViewMarker {
-    static_view(|| {
-        let control_button = |label, id, cb: fn(&mut AppState)| {
-            div(button(label)
-                .attr("type", "button")
-                .class(["btn", "btn-primary", "btn-block"])
-                .attr("id", id)
-                .on_click(move |state, _| cb(state)))
-            .class(["col-sm-6", "smallpad"])
-        };
+fn control_button(
+    label: &'static str,
+    id: &'static str,
+    cb: fn(&mut AppState),
+) -> impl HtmlDivElement<AppState> {
+    div(button(label)
+        .attr("type", "button")
+        .class(["btn", "btn-primary", "btn-block"])
+        .attr("id", id)
+        .on_click(move |state, _| cb(state)))
+    .class(["col-sm-6", "smallpad"])
+}
 
+fn control_buttons() -> impl HtmlDivElement<AppState> {
+    frozen(|| {
         div(div((
             div(h1("xilem_web (non-keyed)")).class("col-md-6"),
             div(div((
@@ -133,40 +141,48 @@ fn control_buttons() -> impl View<AppState> + ViewMarker {
     })
 }
 
-fn row(row: &Row, selected: Option<usize>) -> impl View<AppState> + ViewMarker {
-    memoize(
-        (row.id, row.label.clone(), selected == Some(row.id)),
-        |(id, label, selected)| {
-            let id = *id;
-            tr((
-                td(id.to_string()).class("col-md-1"),
-                td(a(label.clone()).on_click(move |state: &mut AppState, _| state.select(id)))
-                    .class("col-md-4"),
-                td(a(span(())
-                    .class(["glyphicon", "glyphicon-remove"])
-                    .attr("aria-hidden", "true"))
-                .on_click(move |state: &mut AppState, _| state.remove(id)))
-                .class("col-md-1"),
-                td(()).class("col-md-6"),
-            ))
-            .class(selected.then_some("danger"))
-        },
+fn row(label: String, id: usize, selected: bool) -> impl HtmlTableRowElement<AppState> {
+    templated(
+        tr((
+            td(id.to_string()).class("col-md-1"),
+            td(a(label.clone()).on_click(move |state: &mut AppState, _| state.select(id)))
+                .class("col-md-4"),
+            td(a(span(())
+                .class(["glyphicon", "glyphicon-remove"])
+                .attr("aria-hidden", "true"))
+            .on_click(move |state: &mut AppState, _| state.remove(id)))
+            .class("col-md-1"),
+            td(()).class("col-md-6"),
+        ))
+        .class(selected.then_some("danger")),
     )
+}
+
+fn memoized_row(r: &Row, selected: Option<usize>) -> impl HtmlTableRowElement<AppState> {
+    memoize(
+        (r.id, r.label.clone(), selected == Some(r.id)),
+        |(id, label, selected)| row(label.clone(), *id, *selected),
+    )
+}
+
+fn app_logic(state: &mut AppState) -> impl DomView<AppState> {
+    let rows: Vec<_> = state
+        .rows
+        .iter()
+        .map(|r| memoized_row(r, state.selected))
+        .collect();
+    div((
+        control_buttons(),
+        table(tbody(rows)).class(["table", "table-hover", "table-striped", "test-data"]),
+        span(())
+            .class(["preloadicon", "glyphicon", "glyphicon-remove"])
+            .attr("aria-hidden", "true"),
+    ))
+    .class("container")
 }
 
 pub fn main() {
     console_error_panic_hook::set_once();
 
-    App::new(AppState::default(), |state: &mut AppState| {
-        let rows: Vec<_> = state.rows.iter().map(|r| row(r, state.selected)).collect();
-        div((
-            control_buttons(),
-            table(tbody(rows)).class(["table", "table-hover", "table-striped", "test-data"]),
-            span(())
-                .class(["preloadicon", "glyphicon", "glyphicon-remove"])
-                .attr("aria-hidden", "true"),
-        ))
-        .class("container")
-    })
-    .run(&get_element_by_id("main"));
+    App::new(get_element_by_id("main"), AppState::default(), app_logic).run();
 }

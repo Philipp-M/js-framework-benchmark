@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cp -a ./frameworks/non-keyed/xilem_web ./frameworks/non-keyed/xilem_web-$1
+rsync -a --filter=':- .gitignore' ./frameworks/non-keyed/xilem_web/ ./frameworks/non-keyed/xilem_web-$1/
 
 find ./frameworks/non-keyed/xilem_web-$1 \( -type d -name .git -prune \) -o -type f -not \( -name "Cargo.toml" -o -name "main.rs" \) -print0 | xargs -0 sed -i "s/xilem_web/xilem_web-$1/g"
 
